@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Denk+One" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="boggle.js"></script>
+
+  </head>
+  <body>
+
+    <div class="container" ng-app="myApp" ng-controller="Boggle">
+      <div id='board'>
+        <div class='cube' ng-repeat="letter in board track by $index" ng-click="">
+          <p class='letter'>{{ letter }}</p>
+        </div>
+      </div>
+
+      <div id='panel'>
+        <div id="reset-button" ng-click='reset()'>
+          RESET
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
