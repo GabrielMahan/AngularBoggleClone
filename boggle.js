@@ -1,14 +1,34 @@
 var myApp = angular.module('myApp',[]);
 
 myApp.controller('Boggle', ['$scope', function($scope){
-	$scope.game = new BoggleBoard
+	$scope.game = new BoggleBoard;
   $scope.board = $scope.game.randBoard();
   $scope.reset = function() {
-  	$scope.game = new BoggleBoard
+  	$scope.game = new BoggleBoard;
     $scope.board = $scope.game.randBoard();
-		
   }
   $scope.word = "";
+	$scope.path1 = [];
+	$scope.getPath = function() {
+		var path1 = $scope.game.getWordRoutes($scope.word)[0];
+		$scope.path1 = path1;
+		return path1;
+	}
+	$scope.setHighlight = function() {
+		// debugger;
+		if ($scope.path1) {
+			for (var i = 0; i < $scope.path1.length; i++) {
+				if (this.$index === $scope.path1[i]) {
+					return 'highlightCube';
+				}
+			}
+		}
+
+		else {
+			return ""
+		}
+	}
+
 }])
 
 
@@ -116,7 +136,6 @@ BoggleBoard.prototype.getWordRoutes = function(word) {
 	var currentRoutes = []
 	for (var i = 0; i < indexesLength; i++) {
 		var current = indexes.shift();
-		console.log('current', current)
 		current.forEach((idx) => {
 			routes.forEach((route) => {
 				if (route[i] || route[i] === 0) {
@@ -148,8 +167,4 @@ BoggleBoard.prototype.removeRepeats = function(path) {
 		}
 	}
 	return true
-}
-
-function highlightPath = function(path) {
-
 }

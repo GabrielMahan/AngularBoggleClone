@@ -5,14 +5,15 @@
     <link href="styles.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="boggle.js"></script>
+    <title> Boggle Clone</title>
 
   </head>
   <body>
 
     <div class="container" ng-app="myApp" ng-controller="Boggle">
       <div class="interface" id='board'>
-        <div class='cube' ng-repeat="letter in board track by $index" ng-click="">
-          <p class='letter'>{{ letter }}</p>
+        <div class='cube' ng-class="setHighlight()" ng-repeat="letter in board track by $index" ng-click="">
+          <p class='letter'  >{{ letter }}</p>
         </div>
       </div>
 
@@ -21,8 +22,7 @@
           RESET BOARD
         </div>
         <input id="wordCheck" type="text" ng-model="word" placeholder="Check a word"></input>
-
-        {{game.highlightPath(word)}}
+        <span> {{getPath()}} </span>
       </div>
 
     </div>
