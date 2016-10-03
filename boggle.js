@@ -4,8 +4,8 @@ myApp.controller('Boggle', ['$scope', function($scope){
 	$scope.game = new BoggleBoard
   $scope.board = $scope.game.randBoard();
   $scope.reset = function() {
-  	var newBog = new BoggleBoard
-    $scope.board = newBog.randBoard();
+  	$scope.game = new BoggleBoard
+    $scope.board = $scope.game.randBoard();
   }
   $scope.word = "enter";
   $scope.path = $scope.game.getWordRoutes($scope.word)
@@ -92,53 +92,58 @@ BoggleBoard.prototype.getIndicies = function(letter) {
   else { return indicies }
 }
 
+// why is this running three times at start!?
 BoggleBoard.prototype.getWordRoutes = function(word) {
-  initalIndicies = this.getIndicies(word[0])
-  for (var i = 0; i < initalIndicies.length; i++) {
-    initalIndicies[i] = [initalIndicies[i]]
-  }
-  paths = {
-    reference: initalIndicies,
-    working: []
-  }
-
-  // iterate over the letters
-  for (var i = 1; i < word.length; i++) {
-    letter = word[i];
-    // get the indicies for that letter
-    var letterIndicies = this.getIndicies(letter);
-
-    // for each index
-    for (var k = 0; k < letterIndicies.length; k++) {
+	var letterArr = word.split('');
+	var indexes = [];
+	routes = []
 
 
-    // iterate over all the current paths in the ref
-    for (var j = 0; j < paths.reference.length; j++) {
+	for (var i = 0; i < letterArr.length; i++) {
+		var lICheck = this.getIndicies(letterArr[i]);
+		if (lICheck && i === 0) {
+			lICheck.forEach((idx) => {
+				routes.push([idx])
+			})
+		}
+		else if (lICheck) {
+			indexes.push(lICheck);
+		}
+		else {
+			return false
+		}
+	};
 
+	var indexesLength  = indexes.length
+	var currentRoutes = []
+	for (var i = 0; i < indexesLength; i++) {
+		var current = indexes.shift();
+		console.log('current', current)
+		current.forEach((idx) => {
+			routes.forEach((route) => {
+				if (route[i] || route[i] === 0) {
+					if (this.nextTo(route[i], idx)) {
+						currentRoutes.push(route.concat(idx));
+					};
+				};
+			});
+		});
+		routes = currentRoutes;
+		currentRoutes = [];
+	}
 
-        // if it is next to the last index in the current path
-        if (this.nextTo(paths.reference[j][paths.reference[j].length - 1], letterIndicies[k])) {
-          path = paths.reference[j];
-
-          // add that index to a path
-          path.push(letterIndicies[k]);
-          // push it into working paths
-          paths.working.push(path);
-        }
-      }
-    }
-    paths.reference = paths.working;
-    paths.working = [];
-  }
-
-  var filteredForRepeats = this.removeRepeatUse(paths.reference)
-  if (filteredForRepeats.length > 0) {
-    return filteredForRepeats;
-  }
-  else {
-    return false
-  }
+	// return this.removeRepeatUse(routes)
+	return routes;
 }
+
+	// while (wordArr.length > 0) {
+	// 	var current = wordArr.shift();
+	// 	console.log(wordArr)
+	// }
+	//
+	// return routes;
+
+// }
 
 BoggleBoard.prototype.removeRepeatUse = function(arr) {
   var filtered = [];
