@@ -10,18 +10,18 @@
   <body>
 
     <div class="container" ng-app="myApp" ng-controller="Boggle">
-      <div id='board'>
+      <div class="interface" id='board'>
         <div class='cube' ng-repeat="letter in board track by $index" ng-click="">
           <p class='letter'>{{ letter }}</p>
         </div>
       </div>
 
-      <div id='panel'>
+      <div class="interface" id='panel'>
         <div id="reset-button" ng-click='reset()'>
-          RESET
+          RESET BOARD
         </div>
-        <input type="text" ng-model="word" ></input>
-        
+        <input id="wordCheck" type="text" ng-model="word" placeholder="Check a word"></input>
+
         {{game.getWordRoutes(word)}}
       </div>
 

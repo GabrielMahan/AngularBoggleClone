@@ -1,35 +1,49 @@
-#board{
-  height: 400px;
-  width: 400px;
+html {
+  font-family: 'Denk One', sans-serif;
+
+}
+.interface {
   background-color: lightblue;
   box-shadow: -7px 0px 58px -10px rgba(0,0,0,0.75);
   padding: .5em;
   display: inline-block;
+  height: 400px;
   border: 10px solid black;
+}
+
+#board{
+  height: 400px;
+  width: 400px;
+}
+
+#wordCheck {
+  width: 200px;
+  height: 30px;
+  display: block;
+  text-align: center;
+  margin: auto;
+  font-family: 'Denk One', sans-serif;
+
+  font-size: 25px;
 }
 
  #panel {
   position: absolute;
   left: 450px;
-  width: 150px;
-  display: inline-block;
-  height: 200px;
-  background-color: lightblue;
-  border: 10px solid black;
-  margin-top: 100px;
+  width: 300px;
   margin-left: 50px;
-  /*padding: .5em;*/
 
 }
 #reset-button {
   margin-right: auto;
   margin-left: auto;
-  font-family: 'Denk One', sans-serif;
   margin-top: 50px;
+  margin-bottom: 50px;
   padding-top: 10px;
   font-size: 30px;
   height: 50px;
-  width: 80px;
+  /*width: 80px;*/
+
   background-color: aqua;
   border-radius: 10px;
   border: 5px solid gray;
@@ -46,7 +60,6 @@
 
 }
 .letter {
-  font-family: 'Denk One', sans-serif;
   font-size: 4em;
   margin-top: 10px;
   color: lightseagreen;

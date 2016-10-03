@@ -7,7 +7,7 @@ myApp.controller('Boggle', ['$scope', function($scope){
   	$scope.game = new BoggleBoard
     $scope.board = $scope.game.randBoard();
   }
-  $scope.word = "enter";
+  $scope.word = "";
   $scope.path = $scope.game.getWordRoutes($scope.word)
 
 }])
