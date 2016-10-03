@@ -92,7 +92,6 @@ BoggleBoard.prototype.getIndicies = function(letter) {
   else { return indicies }
 }
 
-// why is this running three times at start!?
 BoggleBoard.prototype.getWordRoutes = function(word) {
 	var letterArr = word.split('');
 	var indexes = [];
@@ -132,36 +131,22 @@ BoggleBoard.prototype.getWordRoutes = function(word) {
 		currentRoutes = [];
 	}
 
-	// return this.removeRepeatUse(routes)
-	return routes;
+	routes =  routes.filter(this.removeRepeats)
+	if (routes.length === 0) {
+		return false;
+	}
+	else {
+		return routes;
+	}
 }
 
-	// while (wordArr.length > 0) {
-	// 	var current = wordArr.shift();
-	// 	console.log(wordArr)
-	// }
-	//
-	// return routes;
-
-// }
-
-BoggleBoard.prototype.removeRepeatUse = function(arr) {
-  var filtered = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (this.hasNoRepeats(arr[i])) {
-      filtered.push(arr[i])
-    }
-  }
-  return filtered
-}
-
-BoggleBoard.prototype.hasNoRepeats = function(arr) {
-  for (var i = 0; i < arr.length; i++) {
-    for (var j = 0; j < arr.length; j++) {
-      if (arr[i] === arr[j] && i != j) {
-        return false
-      }
-    }
-  }
-  return true
+BoggleBoard.prototype.removeRepeats = function(path) {
+	for (var i = 0; i < path.length; i++) {
+		for (var j = 0; j < path.length; j++) {
+			if (path[i] === path[j] && i != j) {
+				return false
+			}
+		}
+	}
+	return true
 }
