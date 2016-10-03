@@ -1,14 +1,16 @@
-// var myApp = angular.module('myApp',[]);
-//
-// myApp.controller('Boggle', ['$scope', function($scope){
-// 	$scope.game = new BoggleBoard
-//   $scope.board = $scope.game.randBoard();
-//   $scope.reset = function() {
-//   	var newBog = new BoggleBoard
-//     $scope.board = newBog.randBoard();
-//   }
-//
-// }])
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('Boggle', ['$scope', function($scope){
+	$scope.game = new BoggleBoard
+  $scope.board = $scope.game.randBoard();
+  $scope.reset = function() {
+  	var newBog = new BoggleBoard
+    $scope.board = newBog.randBoard();
+  }
+  $scope.word = "enter";
+  $scope.path = $scope.game.getWordRoutes($scope.word)
+
+}])
 
 
 var BoggleBoard = function() {
@@ -91,32 +93,70 @@ BoggleBoard.prototype.getIndicies = function(letter) {
 }
 
 BoggleBoard.prototype.getWordRoutes = function(word) {
-  indexPaths = [this.getIndicies(word[0])];
-  if (!indexPaths) { return false };
-  for (var i = 1; i < word.length; i++ ) {
-    var letterIndicies = this.getIndicies(word[i])
-    if (letterIndicies) {
-      var replacedPath = []
-      while (letterIndicies.length > 0) {
-        var currentLetter = letterIndicies.pop()
-        for (var j = 0; j < indexPaths.length; j++) {
-          var path = indexPaths[j].push(currentLetter);
-          var lastTwo
-          if () {
-            replacedPath.push(path);
-          }
+  initalIndicies = this.getIndicies(word[0])
+  for (var i = 0; i < initalIndicies.length; i++) {
+    initalIndicies[i] = [initalIndicies[i]]
+  }
+  paths = {
+    reference: initalIndicies,
+    working: []
+  }
+
+  // iterate over the letters
+  for (var i = 1; i < word.length; i++) {
+    letter = word[i];
+    // get the indicies for that letter
+    var letterIndicies = this.getIndicies(letter);
+
+    // for each index
+    for (var k = 0; k < letterIndicies.length; k++) {
+
+
+    // iterate over all the current paths in the ref
+    for (var j = 0; j < paths.reference.length; j++) {
+
+
+        // if it is next to the last index in the current path
+        if (this.nextTo(paths.reference[j][paths.reference[j].length - 1], letterIndicies[k])) {
+          path = paths.reference[j];
+
+          // add that index to a path
+          path.push(letterIndicies[k]);
+          // push it into working paths
+          paths.working.push(path);
         }
       }
-      indexPaths = replacedPath
     }
-    else {
-      return false
-    }
+    paths.reference = paths.working;
+    paths.working = [];
   }
-  return indexPaths
+
+  var filteredForRepeats = this.removeRepeatUse(paths.reference)
+  if (filteredForRepeats.length > 0) {
+    return filteredForRepeats;
+  }
+  else {
+    return false
+  }
 }
 
-// for each index in ....
-// check to see if there 's  any of the next ones work'
+BoggleBoard.prototype.removeRepeatUse = function(arr) {
+  var filtered = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (this.hasNoRepeats(arr[i])) {
+      filtered.push(arr[i])
+    }
+  }
+  return filtered
+}
 
-// over each path, appends the index to the path.
+BoggleBoard.prototype.hasNoRepeats = function(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    for (var j = 0; j < arr.length; j++) {
+      if (arr[i] === arr[j] && i != j) {
+        return false
+      }
+    }
+  }
+  return true
+}

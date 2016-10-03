@@ -20,6 +20,9 @@
         <div id="reset-button" ng-click='reset()'>
           RESET
         </div>
+        <input type="text" ng-model="word" ></input>
+        
+        {{game.getWordRoutes(word)}}
       </div>
 
     </div>
