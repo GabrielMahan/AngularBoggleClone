@@ -54,7 +54,6 @@ html {
   height: 100px;
   width: 100px;
   border-radius: 20px;
-  background-color: white;
   text-align: center;
   background: radial-gradient(ellipse at center, rgba(255,255,255,1) 65%,rgba(0,0,0,.8) 100%);
 
@@ -63,4 +62,9 @@ html {
   font-size: 4em;
   margin-top: 10px;
   color: lightseagreen;
+}
+
+.highlightCube {
+  background-color: indianred;
+    
 }

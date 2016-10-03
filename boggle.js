@@ -6,10 +6,9 @@ myApp.controller('Boggle', ['$scope', function($scope){
   $scope.reset = function() {
   	$scope.game = new BoggleBoard
     $scope.board = $scope.game.randBoard();
+		
   }
   $scope.word = "";
-  $scope.path = $scope.game.getWordRoutes($scope.word)
-
 }])
 
 
@@ -149,4 +148,8 @@ BoggleBoard.prototype.removeRepeats = function(path) {
 		}
 	}
 	return true
+}
+
+function highlightPath = function(path) {
+
 }
